@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import TeacherNote from '../components/TeacherNote';
+import { useSound } from '../contexts/SoundContext';
 
 const Detector: React.FC = () => {
   const [buzzed, setBuzzed] = useState(false);
   const controls = useAnimation();
+  const { playBuzzer } = useSound();
 
   const handleBuzz = async () => {
+    playBuzzer();
     setBuzzed(true);
     
     // Shake animation

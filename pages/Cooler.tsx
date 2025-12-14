@@ -1,9 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import TeacherNote from '../components/TeacherNote';
+import { useSound } from '../contexts/SoundContext';
 import { Rocket } from 'lucide-react';
 
 const Cooler: React.FC = () => {
+  const { playHover } = useSound();
+  
   return (
     <div className="w-full min-h-[80vh] flex flex-col items-center justify-center text-center px-4">
         <motion.div
@@ -25,6 +28,7 @@ const Cooler: React.FC = () => {
         <div className="grid gap-6 md:grid-cols-2 max-w-4xl w-full">
             <motion.div 
                 whileHover={{ y: -5 }}
+                onMouseEnter={playHover}
                 className="p-8 border border-purple-500/30 rounded-2xl bg-gradient-to-b from-purple-900/20 to-transparent"
             >
                 <p className="text-sm text-purple-400 uppercase tracking-widest mb-4">Example 1</p>
@@ -33,6 +37,7 @@ const Cooler: React.FC = () => {
 
             <motion.div 
                 whileHover={{ y: -5 }}
+                onMouseEnter={playHover}
                 className="p-8 border border-purple-500/30 rounded-2xl bg-gradient-to-b from-purple-900/20 to-transparent"
             >
                 <p className="text-sm text-purple-400 uppercase tracking-widest mb-4">Example 2</p>

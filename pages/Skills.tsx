@@ -1,9 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import TeacherNote from '../components/TeacherNote';
+import { useSound } from '../contexts/SoundContext';
 import { Target, Clock, Zap, Brain } from 'lucide-react';
 
 const Skills: React.FC = () => {
+  const { playHover } = useSound();
   const skills = [
     { icon: <Target size={40} />, title: "Multitasking", def: "Texting while doing homework.", color: "text-neon-cyan" },
     { icon: <Zap size={40} />, title: "Under Pressure", def: "Starting the project 5 mins before class.", color: "text-red-500" },
@@ -24,6 +26,7 @@ const Skills: React.FC = () => {
         {skills.map((skill, index) => (
             <motion.div
                 key={index}
+                onMouseEnter={playHover}
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}

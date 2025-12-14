@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
+import { useSound } from '../contexts/SoundContext';
 import { UserMode } from '../types';
 import GlitchText from '../components/GlitchText';
 import { GraduationCap, Users } from 'lucide-react';
@@ -8,9 +9,11 @@ import { motion } from 'framer-motion';
 
 const Welcome: React.FC = () => {
   const { setUserMode } = useTheme();
+  const { playClick, playHover, playSuccess } = useSound();
   const navigate = useNavigate();
 
   const handleSelect = (mode: UserMode) => {
+    playSuccess(); // Nice sound when selecting role
     setUserMode(mode);
     navigate('/intro');
   };
@@ -29,6 +32,7 @@ const Welcome: React.FC = () => {
         <motion.button
           whileHover={{ scale: 1.05, borderColor: '#00f3ff' }}
           whileTap={{ scale: 0.95 }}
+          onMouseEnter={playHover}
           onClick={() => handleSelect(UserMode.STUDENT)}
           className="group relative h-80 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm overflow-hidden flex flex-col items-center justify-center gap-6 p-8 transition-all hover:shadow-[0_0_50px_rgba(0,243,255,0.2)] hover:bg-white/10"
         >
@@ -43,6 +47,7 @@ const Welcome: React.FC = () => {
         <motion.button
           whileHover={{ scale: 1.05, borderColor: '#facc15' }}
           whileTap={{ scale: 0.95 }}
+          onMouseEnter={playHover}
           onClick={() => handleSelect(UserMode.TEACHER)}
           className="group relative h-80 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm overflow-hidden flex flex-col items-center justify-center gap-6 p-8 transition-all hover:shadow-[0_0_50px_rgba(250,204,21,0.2)] hover:bg-white/10"
         >

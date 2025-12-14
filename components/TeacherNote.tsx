@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
+import { useSound } from '../contexts/SoundContext';
 import { Info, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -10,14 +11,26 @@ interface TeacherNoteProps {
 
 const TeacherNote: React.FC<TeacherNoteProps> = ({ content, title = "TEACHER'S INTEL" }) => {
   const { isTeacher } = useTheme();
+  const { playClick, playReveal } = useSound();
   const [isOpen, setIsOpen] = useState(false);
 
   if (!isTeacher) return null;
 
+  const handleOpen = () => {
+    playClick();
+    if (!isOpen) playReveal();
+    setIsOpen(true);
+  };
+
+  const handleClose = () => {
+    playClick();
+    setIsOpen(false);
+  };
+
   return (
     <>
       <button
-        onClick={() => setIsOpen(true)}
+        onClick={handleOpen}
         className="fixed bottom-24 right-6 z-40 bg-neon-yellow text-black font-bold p-3 rounded-full shadow-lg hover:scale-110 transition-transform animate-bounce"
         title="View Teacher Notes"
       >
@@ -34,7 +47,7 @@ const TeacherNote: React.FC<TeacherNoteProps> = ({ content, title = "TEACHER'S I
           >
             <div className="flex justify-between items-start mb-4">
               <h4 className="font-display font-bold text-neon-yellow tracking-widest">{title}</h4>
-              <button onClick={() => setIsOpen(false)} className="text-yellow-200 hover:text-white">
+              <button onClick={handleClose} className="text-yellow-200 hover:text-white">
                 <X size={20} />
               </button>
             </div>

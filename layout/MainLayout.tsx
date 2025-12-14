@@ -1,9 +1,10 @@
 import React from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useTheme } from '../contexts/ThemeContext';
+import { useSound } from '../contexts/SoundContext';
 import { UserMode, Theme } from '../types';
 import Background from '../components/Background';
-import { Moon, Sun, ChevronRight, ChevronLeft, GraduationCap, Users } from 'lucide-react';
+import { Moon, Sun, ChevronRight, ChevronLeft, GraduationCap, Users, Volume2, VolumeX } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const routes = [
@@ -18,6 +19,7 @@ const routes = [
 
 const MainLayout: React.FC = () => {
   const { theme, toggleTheme, userMode, isTeacher } = useTheme();
+  const { playClick, playHover, toggleMute, isMuted } = useSound();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -25,8 +27,15 @@ const MainLayout: React.FC = () => {
   const nextRoute = routes[currentIndex + 1];
   const prevRoute = routes[currentIndex - 1];
 
-  const handleNext = () => nextRoute && navigate(nextRoute.path);
-  const handlePrev = () => prevRoute && navigate(prevRoute.path);
+  const handleNext = () => {
+    playClick();
+    if (nextRoute) navigate(nextRoute.path);
+  };
+
+  const handlePrev = () => {
+    playClick();
+    if (prevRoute) navigate(prevRoute.path);
+  };
 
   return (
     <div className={`min-h-screen flex flex-col relative transition-colors duration-500 ${theme === Theme.DARK ? 'text-white' : 'text-slate-900'}`}>
@@ -49,7 +58,17 @@ const MainLayout: React.FC = () => {
           )}
           
           <button
-            onClick={toggleTheme}
+            onClick={() => { playClick(); toggleMute(); }}
+            onMouseEnter={playHover}
+            className="p-2 rounded-full hover:bg-white/10 transition-colors text-gray-400 hover:text-white"
+            title={isMuted ? "Unmute" : "Mute"}
+          >
+            {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+          </button>
+
+          <button
+            onClick={() => { playClick(); toggleTheme(); }}
+            onMouseEnter={playHover}
             className="p-2 rounded-full hover:bg-white/10 transition-colors"
           >
             {theme === Theme.DARK ? <Sun size={20} className="text-neon-yellow" /> : <Moon size={20} className="text-indigo-600" />}
@@ -78,6 +97,7 @@ const MainLayout: React.FC = () => {
         <footer className="fixed bottom-0 w-full z-40 p-6 flex justify-between items-center bg-gradient-to-t from-black/80 to-transparent backdrop-blur-md border-t border-white/5">
           <button
             onClick={handlePrev}
+            onMouseEnter={playHover}
             disabled={!prevRoute}
             className={`flex items-center gap-2 px-6 py-3 rounded-lg font-display text-sm font-bold tracking-widest transition-all ${
               !prevRoute ? 'opacity-0 pointer-events-none' : 'hover:bg-white/10 text-gray-400 hover:text-white'
@@ -105,6 +125,7 @@ const MainLayout: React.FC = () => {
 
           <button
             onClick={handleNext}
+            onMouseEnter={playHover}
             disabled={!nextRoute}
             className={`flex items-center gap-2 px-8 py-3 rounded-lg font-display text-sm font-bold tracking-widest transition-all ${
               !nextRoute 

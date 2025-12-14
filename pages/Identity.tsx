@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import TeacherNote from '../components/TeacherNote';
+import { useSound } from '../contexts/SoundContext';
 
 const cards = [
   {
@@ -31,8 +32,13 @@ const cards = [
 
 const Identity: React.FC = () => {
   const [flipped, setFlipped] = useState<number | null>(null);
+  const { playFlip, playHover, playReveal } = useSound();
 
   const handleCardClick = (id: number) => {
+    playFlip();
+    if (flipped !== id) {
+        setTimeout(() => playReveal(), 300); // Sound when content reveals
+    }
     setFlipped(flipped === id ? null : id);
   };
 
@@ -51,6 +57,7 @@ const Identity: React.FC = () => {
             key={card.id} 
             className="h-[500px] perspective-1000 cursor-pointer group"
             onClick={() => handleCardClick(card.id)}
+            onMouseEnter={playHover}
           >
             <motion.div 
               className="relative w-full h-full transition-all duration-700 preserve-3d"
