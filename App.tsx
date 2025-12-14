@@ -7,9 +7,18 @@ import Welcome from './pages/Welcome';
 import Intro from './pages/Intro';
 import Identity from './pages/Identity';
 import Skills from './pages/Skills';
-import Grammar from './pages/Grammar';
 import Detector from './pages/Detector';
 import Cooler from './pages/Cooler';
+
+// Grammar Pages
+import GrammarIntro from './pages/grammar/GrammarIntro';
+import Obligation from './pages/grammar/Obligation';
+import ObligationPast from './pages/grammar/ObligationPast';
+import Prohibition from './pages/grammar/Prohibition';
+import ProhibitionPast from './pages/grammar/ProhibitionPast';
+import Optional from './pages/grammar/Optional';
+import OptionalPast from './pages/grammar/OptionalPast';
+import CommonErrors from './pages/grammar/CommonErrors';
 
 const App: React.FC = () => {
   return (
@@ -22,7 +31,17 @@ const App: React.FC = () => {
               <Route path="/intro" element={<Intro />} />
               <Route path="/identity" element={<Identity />} />
               <Route path="/skills" element={<Skills />} />
-              <Route path="/grammar" element={<Grammar />} />
+              
+              {/* Expanded Grammar Section */}
+              <Route path="/grammar/intro" element={<GrammarIntro />} />
+              <Route path="/grammar/obligation" element={<Obligation />} />
+              <Route path="/grammar/obligation-past" element={<ObligationPast />} />
+              <Route path="/grammar/prohibition" element={<Prohibition />} />
+              <Route path="/grammar/prohibition-past" element={<ProhibitionPast />} />
+              <Route path="/grammar/optional" element={<Optional />} />
+              <Route path="/grammar/optional-past" element={<OptionalPast />} />
+              <Route path="/grammar/error" element={<CommonErrors />} />
+
               <Route path="/interrogation" element={<Detector />} />
               <Route path="/cooler" element={<Cooler />} />
               <Route path="*" element={<Navigate to="/" replace />} />

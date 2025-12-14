@@ -8,6 +8,8 @@ export enum Theme {
   LIGHT = 'light'
 }
 
+export type Language = 'EN' | 'RU' | 'UZ';
+
 export interface RouteConfig {
   path: string;
   label: string;

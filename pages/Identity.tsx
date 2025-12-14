@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import TeacherNote from '../components/TeacherNote';
 import { useSound } from '../contexts/SoundContext';
+import Translator from '../components/Translator';
 
 const cards = [
   {
@@ -43,19 +44,23 @@ const Identity: React.FC = () => {
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4">
-      <div className="mb-12 text-center">
-         <h2 className="text-4xl md:text-6xl font-display font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-purple-500">
+    <div className="w-full h-full flex flex-col justify-center px-4">
+      <div className="mb-8 md:mb-12 text-center">
+         <h2 className="text-[5vmin] font-display font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-purple-500">
           01. CHOOSE YOUR LIES
         </h2>
-        <p className="text-xl opacity-70">Tap a card to download your "Secret Identity".</p>
+        <Translator 
+            en={<p className="text-[2.5vmin] opacity-70">Tap a card to download your "Secret Identity".</p>}
+            ru="Нажмите на карту, чтобы получить секретную личность"
+            uz="Maxfiy shaxsingizni yuklab olish uchun kartani bosing"
+        />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12 w-full max-w-[90vw] mx-auto h-[50vh] md:h-[60vh]">
         {cards.map((card) => (
           <div 
             key={card.id} 
-            className="h-[500px] perspective-1000 cursor-pointer group"
+            className="w-full h-full perspective-1000 cursor-pointer group"
             onClick={() => handleCardClick(card.id)}
             onMouseEnter={playHover}
           >
@@ -66,33 +71,32 @@ const Identity: React.FC = () => {
               {/* Front */}
               <div className="absolute w-full h-full backface-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-gray-900 to-black p-8 flex flex-col justify-between shadow-2xl group-hover:border-neon-cyan/50 transition-colors">
                  <div>
-                    <h3 className="text-6xl font-display font-bold opacity-20">#{String(card.id).padStart(3, '0')}</h3>
-                    <h4 className="text-3xl font-bold mt-8 text-white">{card.role}</h4>
+                    <h3 className="text-[8vmin] font-display font-bold opacity-20">#{String(card.id).padStart(3, '0')}</h3>
+                    <h4 className="text-[4vmin] font-bold mt-4 text-white leading-tight">{card.role}</h4>
                  </div>
-                 <div className="text-neon-cyan text-sm tracking-widest animate-pulse">
-                    TAP TO ACCESS DATABASE
+                 <div className="text-neon-cyan text-[1.5vmin] tracking-widest animate-pulse">
+                    TAP TO ACCESS
                  </div>
               </div>
 
               {/* Back */}
-              <div className="absolute w-full h-full backface-hidden rounded-3xl border border-neon-pink bg-gradient-to-br from-pink-900/20 to-black p-8 flex flex-col justify-center rotate-y-180 backdrop-blur-xl shadow-[0_0_30px_rgba(255,0,255,0.1)]">
-                 <div className="space-y-6">
+              <div className="absolute w-full h-full backface-hidden rounded-3xl border border-neon-pink bg-gradient-to-br from-pink-900/20 to-black p-6 md:p-8 flex flex-col justify-center rotate-y-180 backdrop-blur-xl shadow-[0_0_30px_rgba(255,0,255,0.1)]">
+                 <div className="flex flex-col h-full justify-between">
                     <div>
-                        <p className="text-xs text-neon-pink uppercase tracking-widest mb-1">Target Identity</p>
-                        <h3 className="text-2xl font-bold text-white">{card.fakeJob}</h3>
-                    </div>
-                    <div>
-                        <p className="text-xs text-gray-500 uppercase tracking-widest mb-1">True Identity</p>
-                        <h3 className="text-lg text-gray-400 line-through decoration-red-500 decoration-2">{card.realJob}</h3>
+                        <p className="text-[1.2vmin] text-neon-pink uppercase tracking-widest mb-1">Target Identity</p>
+                        <h3 className="text-[3vmin] font-bold text-white leading-none mb-4">{card.fakeJob}</h3>
+                    
+                        <p className="text-[1.2vmin] text-gray-500 uppercase tracking-widest mb-1">True Identity</p>
+                        <h3 className="text-[2vmin] text-gray-400 line-through decoration-red-500 decoration-2 leading-none">{card.realJob}</h3>
                     </div>
                     
-                    <div className="bg-white/5 p-4 rounded-lg border-l-2 border-neon-cyan">
-                        <p className="text-xs text-neon-cyan uppercase tracking-widest mb-2">Key Vocabulary</p>
-                        <p className="text-white font-mono text-sm">{card.vocab}</p>
+                    <div className="bg-white/5 p-3 rounded-lg border-l-2 border-neon-cyan my-2">
+                        <p className="text-[1vmin] text-neon-cyan uppercase tracking-widest mb-1">Vocab</p>
+                        <p className="text-white font-mono text-[1.5vmin]">{card.vocab}</p>
                     </div>
 
-                    <div className="bg-white/5 p-4 rounded-lg border-l-2 border-neon-pink italic">
-                        <p className="text-gray-300 text-sm">"{card.line}"</p>
+                    <div className="bg-white/5 p-3 rounded-lg border-l-2 border-neon-pink italic">
+                        <p className="text-gray-300 text-[1.5vmin]">"{card.line}"</p>
                     </div>
                  </div>
               </div>
