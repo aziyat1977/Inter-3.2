@@ -7,18 +7,18 @@ import { ArrowRight } from 'lucide-react';
 
 const ObligationPast: React.FC = () => {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center text-center">
+    <div className="w-full h-full flex flex-col items-center justify-center text-center p-4">
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className="mb-12 flex items-center gap-8 opacity-50"
+        className="mb-12 flex items-center gap-4 md:gap-8 opacity-50"
       >
-        <span className="text-[3vmin]">MUST</span>
+        <span className="text-[3vmin] font-bold">MUST</span>
         <ArrowRight className="text-neon-pink" size={32} />
-        <span className="text-[3vmin]">PAST</span>
+        <span className="text-[3vmin] font-bold">PAST</span>
       </motion.div>
 
-      <div className="relative">
+      <div className="relative w-full max-w-5xl h-[30vh]">
         {/* Glow effect */}
         <div className="absolute inset-0 bg-neon-pink/20 blur-[100px] rounded-full" />
         
@@ -26,6 +26,8 @@ const ObligationPast: React.FC = () => {
           en={<AutoFitText maxSize="20vw" className="text-neon-pink drop-shadow-[0_0_15px_rgba(255,0,255,0.5)]">HAD TO</AutoFitText>}
           ru="Пришлось / Был должен"
           uz="Majbur bo'ldim"
+          className="w-full h-full"
+          contentClassName="h-full"
         />
       </div>
 
@@ -33,7 +35,7 @@ const ObligationPast: React.FC = () => {
       <div className="w-full max-w-4xl mt-16 relative h-2 bg-gray-700 rounded-full flex items-center justify-between px-4">
         {/* Past Point */}
         <div className="absolute left-[20%] top-1/2 -translate-y-1/2 flex flex-col items-center">
-            <div className="w-8 h-8 bg-neon-pink rounded-full shadow-[0_0_20px_#ff00ff]" />
+            <div className="w-6 h-6 md:w-8 md:h-8 bg-neon-pink rounded-full shadow-[0_0_20px_#ff00ff]" />
             <p className="absolute top-10 text-neon-pink font-bold text-[2vmin]">YESTERDAY</p>
         </div>
         
@@ -48,7 +50,7 @@ const ObligationPast: React.FC = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="mt-20 text-[3vmin] text-gray-300 italic"
+        className="mt-20 text-[3vmin] text-gray-300 italic px-4"
       >
         "I <span className="text-neon-pink font-bold">had to</span> lie to get the job."
       </motion.div>

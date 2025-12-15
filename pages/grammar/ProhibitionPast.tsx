@@ -7,23 +7,25 @@ import { ArrowRight, Ban } from 'lucide-react';
 
 const ProhibitionPast: React.FC = () => {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center text-center">
+    <div className="w-full h-full flex flex-col items-center justify-center text-center p-4">
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className="mb-12 flex items-center gap-8 opacity-50"
+        className="mb-12 flex items-center gap-4 md:gap-8 opacity-50"
       >
-        <span className="text-[3vmin]">MUSTN'T</span>
+        <span className="text-[3vmin] font-bold">MUSTN'T</span>
         <ArrowRight className="text-neon-pink" size={32} />
-        <span className="text-[3vmin]">PAST</span>
+        <span className="text-[3vmin] font-bold">PAST</span>
       </motion.div>
 
-      <div className="relative">
+      <div className="relative w-full max-w-5xl h-[30vh]">
         <div className="absolute inset-0 bg-red-900/20 blur-[100px] rounded-full" />
         <Translator 
           en={<AutoFitText maxSize="18vw" className="text-neon-pink drop-shadow-[0_0_15px_rgba(255,0,255,0.5)]">COULDN'T</AutoFitText>}
           ru="Не мог / Нельзя было"
           uz="Qila olmadim / Mumkin emas edi"
+          className="w-full h-full"
+          contentClassName="h-full"
         />
       </div>
 
@@ -48,7 +50,7 @@ const ProhibitionPast: React.FC = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="mt-20 text-[3vmin] text-gray-300 italic"
+        className="mt-20 text-[3vmin] text-gray-300 italic px-4"
       >
         "I <span className="text-neon-pink font-bold">couldn't</span> tell the truth."
       </motion.div>

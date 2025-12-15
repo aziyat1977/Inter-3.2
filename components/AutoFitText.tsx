@@ -1,49 +1,54 @@
-import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
+import React, { useRef, useState, useLayoutEffect } from 'react';
 
 interface AutoFitTextProps {
   children: React.ReactNode;
-  maxSize?: string; // Optional CSS value (e.g. "200px") to cap the size
-  minSize?: number; // Minimum font size in px
+  maxSize?: string; // e.g. "15vw"
+  minSize?: number; // px
   className?: string;
   as?: React.ElementType;
-  padding?: number; // Internal padding to account for
+  padding?: number;
 }
 
 const AutoFitText: React.FC<AutoFitTextProps> = ({ 
   children, 
   maxSize, 
-  minSize = 10,
+  minSize = 12,
   className = "", 
   as: Component = "div",
   padding = 0
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLSpanElement>(null);
-  const [fontSize, setFontSize] = useState(100); // Start large
+  const [fontSize, setFontSize] = useState(100);
   const [ready, setReady] = useState(false);
 
-  // The "Algorithm": Resize logic
   const fitText = () => {
     const container = containerRef.current;
     const text = textRef.current;
     if (!container || !text) return;
 
-    const containerWidth = container.clientWidth - (padding * 2);
-    const containerHeight = container.clientHeight - (padding * 2);
+    // Get dimensions. Fallback to offsetWidth if clientWidth is 0
+    const w = container.clientWidth || container.offsetWidth;
+    const h = container.clientHeight || container.offsetHeight;
+
+    const containerWidth = w - (padding * 2);
+    const containerHeight = h - (padding * 2);
     
-    // Safety check for invisible containers
+    // If invisible or collapsed, don't calculate yet
     if (containerWidth <= 0 || containerHeight <= 0) return;
 
-    // Binary search for optimal font size
     let min = minSize;
-    let max = 500; // Unreasonable max
+    let max = 600; 
     let optimal = min;
 
-    // Fast approximation
+    // Convert maxSize from vw/vh/px to number if possible for upper bound
+    // (Skipped complex parsing for simplicity, relying on binary search)
+
     while (min <= max) {
       const mid = Math.floor((min + max) / 2);
       text.style.fontSize = `${mid}px`;
       
+      // Allow slight tolerance
       if (text.scrollWidth <= containerWidth && text.scrollHeight <= containerHeight) {
         optimal = mid;
         min = mid + 1;
@@ -58,9 +63,7 @@ const AutoFitText: React.FC<AutoFitTextProps> = ({
 
   useLayoutEffect(() => {
     fitText();
-    // Resize observer to handle window resizing or layout shifts
     const observer = new ResizeObserver(() => {
-      // Small debounce to prevent thrashing
       requestAnimationFrame(fitText);
     });
 
@@ -69,7 +72,10 @@ const AutoFitText: React.FC<AutoFitTextProps> = ({
     }
 
     return () => observer.disconnect();
-  }, [children, padding, minSize]);
+  }, [children, padding, minSize, maxSize]);
+
+  // Apply maxSize via style on the text span to ensure it doesn't exceed visual design cap
+  const maxFontSizeStyle = maxSize ? { fontSize: `min(${fontSize}px, ${maxSize})` } : { fontSize: `${fontSize}px` };
 
   return (
     <Component 
@@ -80,13 +86,13 @@ const AutoFitText: React.FC<AutoFitTextProps> = ({
       <span 
         ref={textRef}
         style={{ 
-          fontSize: `${fontSize}px`, 
+          ...maxFontSizeStyle,
           opacity: ready ? 1 : 0,
           whiteSpace: 'nowrap',
           lineHeight: 1.1,
           transition: 'opacity 0.2s ease-in'
         }}
-        className="font-display font-bold tracking-tight text-center"
+        className="font-display font-bold tracking-tight text-center inline-block"
       >
         {children}
       </span>

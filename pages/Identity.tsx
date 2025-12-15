@@ -44,11 +44,12 @@ const Identity: React.FC = () => {
   };
 
   return (
-    <div className="w-full min-h-full flex flex-col justify-center px-4">
-      <div className="mb-8 md:mb-12 text-center">
-         <h2 className="text-[5vmin] font-display font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-purple-500">
+    <div className="w-full min-h-full flex flex-col justify-center px-4 py-8">
+      <div className="mb-8 md:mb-12 text-center w-full flex flex-col items-center">
+         <h2 className="text-[5vmin] font-display font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-purple-500">
           01. CHOOSE YOUR LIES
         </h2>
+        
         <Translator 
             en={<p className="text-[2.5vmin] opacity-70">Tap a card to download your "Secret Identity".</p>}
             ru="Нажмите на карту, чтобы получить секретную личность"
@@ -75,7 +76,7 @@ const Identity: React.FC = () => {
                     <h3 className="text-[8vmin] md:text-[6vmin] font-display font-bold opacity-20">#{String(card.id).padStart(3, '0')}</h3>
                     <h4 className="text-[5vmin] md:text-[3vmin] font-bold mt-4 text-white leading-tight">{card.role}</h4>
                  </div>
-                 <div className="text-neon-cyan text-xs md:text-sm tracking-widest animate-pulse">
+                 <div className="text-neon-cyan text-xs md:text-sm tracking-widest animate-pulse border border-neon-cyan/30 rounded-full px-4 py-2 self-start">
                     TAP TO ACCESS
                  </div>
               </div>
