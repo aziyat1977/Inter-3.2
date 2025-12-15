@@ -71,9 +71,7 @@ const SkillQuiz: React.FC = () => {
   }, [timer, gameState, showAnswerFeedback]);
 
   const shuffleQuestions = () => {
-    // Shuffle array algorithm
     const shuffled = [...QUESTION_BANK].sort(() => Math.random() - 0.5);
-    // Shuffle options for each question
     const processed = shuffled.map(q => ({
       ...q,
       options: [...q.options].sort(() => Math.random() - 0.5)
@@ -99,7 +97,7 @@ const SkillQuiz: React.FC = () => {
     
     if (isCorrect) {
       playSuccess();
-      setScore(s => s + 100 + (timer * 10)); // Score based on speed
+      setScore(s => s + 100 + (timer * 10)); 
       setLastCorrect(true);
     } else {
       playBuzzer();
@@ -107,7 +105,6 @@ const SkillQuiz: React.FC = () => {
     }
 
     setShowAnswerFeedback(true);
-    
     setTimeout(() => {
       nextQuestion();
     }, 2000);
@@ -133,23 +130,22 @@ const SkillQuiz: React.FC = () => {
     }
   };
 
-  // Render Helpers
   const currentQuestion = questions[currentQIndex];
   const RandomIcon = useMemo(() => ICONS[Math.floor(Math.random() * ICONS.length)], [currentQIndex]);
 
   if (gameState === 'START') {
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center text-center gap-8">
+      <div className="w-full h-full flex flex-col items-center justify-center text-center gap-8 py-4">
         <motion.div 
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            className="p-8 bg-neon-cyan/20 rounded-full border-4 border-neon-cyan"
+            className="p-6 md:p-8 bg-neon-cyan/20 rounded-full border-4 border-neon-cyan"
         >
-            <HelpCircle size={64} className="text-neon-cyan" />
+            <HelpCircle size={48} className="text-neon-cyan md:w-16 md:h-16" />
         </motion.div>
         <div>
-            <h2 className="text-6xl font-display font-bold mb-4">SKILL CHECK</h2>
-            <p className="text-xl text-gray-400">20 Questions. Speed matters. Are you ready?</p>
+            <h2 className="text-4xl md:text-6xl font-display font-bold mb-4">SKILL CHECK</h2>
+            <p className="text-base md:text-xl text-gray-400">20 Questions. Speed matters. Are you ready?</p>
         </div>
         <button 
             onClick={startGame}
@@ -163,12 +159,12 @@ const SkillQuiz: React.FC = () => {
 
   if (gameState === 'RESULT') {
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center text-center gap-8">
+      <div className="w-full h-full flex flex-col items-center justify-center text-center gap-8 py-4">
         <h2 className="text-4xl font-display font-bold text-gray-400">FINAL SCORE</h2>
         <motion.div 
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-pink"
+            className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-neon-pink"
         >
             {score}
         </motion.div>
@@ -186,20 +182,20 @@ const SkillQuiz: React.FC = () => {
   }
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-between py-12 px-4 max-w-6xl mx-auto">
+    <div className="w-full h-full flex flex-col gap-3 p-2 md:p-4 max-w-6xl mx-auto overflow-hidden">
       
       {/* Top Bar */}
-      <div className="w-full flex justify-between items-center mb-4">
-        <div className="bg-white/10 px-4 py-2 rounded-full font-mono text-xl">
+      <div className="w-full flex justify-between items-center shrink-0">
+        <div className="bg-white/10 px-3 py-1 md:px-4 md:py-2 rounded-full font-mono text-sm md:text-xl">
             {currentQIndex + 1} / {questions.length}
         </div>
-        <div className="text-2xl font-black text-neon-yellow">
+        <div className="text-lg md:text-2xl font-black text-neon-yellow">
             SCORE: {score}
         </div>
       </div>
 
       {/* Timer Bar */}
-      <div className="w-full h-4 bg-gray-800 rounded-full overflow-hidden mb-8">
+      <div className="w-full h-2 md:h-4 bg-gray-800 rounded-full overflow-hidden shrink-0">
         <motion.div 
             initial={{ width: '100%' }}
             animate={{ width: `${(timer / 15) * 100}%` }}
@@ -208,9 +204,10 @@ const SkillQuiz: React.FC = () => {
         />
       </div>
 
-      {/* Question Area */}
-      <div className="flex-grow flex flex-col items-center justify-center w-full gap-8 relative">
-        <div className="bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-2xl w-full text-center min-h-[200px] flex items-center justify-center shadow-2xl relative overflow-hidden">
+      {/* Question Area - Fills available space */}
+      <div className="flex-1 w-full relative min-h-0 flex flex-col">
+        <div className="bg-white/5 backdrop-blur-md border border-white/10 p-4 md:p-8 rounded-2xl w-full h-full flex items-center justify-center shadow-2xl relative overflow-hidden">
+            
             {/* Feedback Overlay */}
             <AnimatePresence>
                 {showAnswerFeedback && (
@@ -220,46 +217,45 @@ const SkillQuiz: React.FC = () => {
                         exit={{ opacity: 0 }}
                         className={`absolute inset-0 z-20 flex items-center justify-center ${lastCorrect ? 'bg-green-500/90' : 'bg-red-500/90'}`}
                     >
-                        <h2 className="text-6xl font-black text-white drop-shadow-lg">
+                        <h2 className="text-4xl md:text-6xl font-black text-white drop-shadow-lg">
                             {lastCorrect ? "CORRECT!" : "WRONG!"}
                         </h2>
                     </motion.div>
                 )}
             </AnimatePresence>
 
-            <AutoFitText maxSize="5vw" className={isDark ? "text-white" : "text-gray-900"}>
+            <AutoFitText maxSize="8vh" className={isDark ? "text-white" : "text-gray-900"}>
                 {currentQuestion.text}
             </AutoFitText>
         </div>
         
-        {/* Decorative Icon */}
-        <div className="p-6 bg-white/5 rounded-full animate-bounce">
-            <RandomIcon size={48} className="opacity-50" />
+        {/* Random decorative icon floating near question */}
+        <div className="absolute -bottom-4 -right-4 md:bottom-4 md:right-4 p-4 opacity-20 pointer-events-none">
+             <RandomIcon size={64} />
         </div>
       </div>
 
-      {/* Answer Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mt-8">
+      {/* Answer Grid - Constrained height (approx 40% of viewport or fit content) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 w-full shrink-0 h-[45%] md:h-[35%]">
         {currentQuestion.options.map((opt: string, idx: number) => (
             <motion.button
                 key={idx}
-                whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => handleAnswer(opt)}
                 disabled={showAnswerFeedback}
-                className={`${COLORS[idx]} p-6 md:p-8 rounded-xl shadow-lg flex items-center justify-between group transition-all relative overflow-hidden`}
+                className={`${COLORS[idx]} p-3 md:p-4 rounded-xl shadow-lg flex items-center justify-between group transition-all relative overflow-hidden h-full`}
             >
                 <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
                 
                 {/* Shapes */}
-                <div className="bg-black/20 w-10 h-10 flex items-center justify-center rounded font-black text-white/50 text-xl relative z-10">
+                <div className="bg-black/20 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded font-black text-white/50 text-base md:text-xl relative z-10 shrink-0">
                     {idx === 0 && "▲"}
                     {idx === 1 && "◆"}
                     {idx === 2 && "●"}
                     {idx === 3 && "■"}
                 </div>
 
-                <span className="text-xl md:text-2xl font-bold text-white relative z-10 text-center flex-grow shadow-black drop-shadow-md">
+                <span className="text-base md:text-xl lg:text-2xl font-bold text-white relative z-10 text-center flex-grow shadow-black drop-shadow-md leading-tight px-2 break-words line-clamp-2">
                     {opt}
                 </span>
             </motion.button>

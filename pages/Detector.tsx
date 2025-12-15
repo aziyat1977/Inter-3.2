@@ -25,36 +25,36 @@ const Detector: React.FC = () => {
   return (
     <motion.div 
         animate={controls}
-        className={`w-full min-h-screen flex flex-col md:flex-row items-center justify-center px-4 md:px-20 gap-16 transition-colors duration-100 ${buzzed ? 'bg-red-900/50' : ''}`}
+        className={`w-full min-h-full flex flex-col md:flex-row items-center justify-center px-4 md:px-20 gap-8 md:gap-16 transition-colors duration-100 ${buzzed ? 'bg-red-900/50' : ''}`}
     >
-        <div className="md:w-1/2 space-y-8">
+        <div className="w-full md:w-1/2 space-y-8 text-center md:text-left">
              <h2 className="text-4xl md:text-6xl font-display font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">
                 04. LIE DETECTOR
             </h2>
-            <p className="text-2xl font-light">Your partner is lying again. Interrogate them.</p>
+            <p className="text-xl md:text-2xl font-light">Your partner is lying again. Interrogate them.</p>
 
-            <div className="space-y-4 bg-white/5 p-8 rounded-2xl border border-white/10">
+            <div className="space-y-4 bg-white/5 p-6 md:p-8 rounded-2xl border border-white/10 text-left">
                 <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-neon-cyan text-black font-bold flex items-center justify-center text-xl">1</div>
-                    <p className="text-lg">Ask: "What did you <span className="text-neon-cyan font-bold">HAVE TO</span> do?"</p>
+                    <div className="w-10 h-10 rounded-full bg-neon-cyan text-black font-bold flex flex-shrink-0 items-center justify-center text-xl">1</div>
+                    <p className="text-base md:text-lg">Ask: "What did you <span className="text-neon-cyan font-bold">HAVE TO</span> do?"</p>
                 </div>
                 <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-neon-cyan text-black font-bold flex items-center justify-center text-xl">2</div>
-                    <p className="text-lg">Ask: "What <span className="text-neon-cyan font-bold">COULDN'T</span> you do?"</p>
+                    <div className="w-10 h-10 rounded-full bg-neon-cyan text-black font-bold flex flex-shrink-0 items-center justify-center text-xl">2</div>
+                    <p className="text-base md:text-lg">Ask: "What <span className="text-neon-cyan font-bold">COULDN'T</span> you do?"</p>
                 </div>
                 <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-full bg-red-500 text-white font-bold flex items-center justify-center text-xl">3</div>
-                    <p className="text-lg">Listen for "Musted". If you hear it, hit the button.</p>
+                    <div className="w-10 h-10 rounded-full bg-red-500 text-white font-bold flex flex-shrink-0 items-center justify-center text-xl">3</div>
+                    <p className="text-base md:text-lg">Listen for "Musted". If you hear it, hit the button.</p>
                 </div>
             </div>
         </div>
 
-        <div className="md:w-1/2 flex justify-center">
+        <div className="w-full md:w-1/2 flex justify-center py-8">
             <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={handleBuzz}
-                className="relative w-72 h-72 rounded-full bg-gradient-to-br from-red-600 to-red-900 border-8 border-red-950 shadow-[0_0_60px_rgba(255,0,0,0.4)] flex items-center justify-center group overflow-hidden"
+                className="relative w-64 h-64 md:w-72 md:h-72 rounded-full bg-gradient-to-br from-red-600 to-red-900 border-8 border-red-950 shadow-[0_0_60px_rgba(255,0,0,0.4)] flex items-center justify-center group overflow-hidden"
             >
                  <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-30 mix-blend-overlay"></div>
                  <div className="relative z-10 text-center">

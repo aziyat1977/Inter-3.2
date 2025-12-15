@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import AutoFitText from '../../components/AutoFitText';
-import Translator from '../../components/Translator';
 import TeacherNote from '../../components/TeacherNote';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Target } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
 
 const Multitasking: React.FC = () => {
   const { isDark } = useTheme();
+  const [showEn, setShowEn] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowEn(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center text-center relative overflow-hidden">
@@ -31,11 +36,34 @@ const Multitasking: React.FC = () => {
             <Target size="8vmin" />
         </motion.div>
 
-        <Translator 
-            en={<AutoFitText maxSize="15vw" className="text-neon-cyan drop-shadow-[0_0_10px_rgba(0,243,255,0.5)]">MULTITASKING</AutoFitText>}
-            ru="Многозадачность"
-            uz="Ko'p vazifalik"
-        />
+        <div className="min-h-[20vh] flex items-center justify-center w-full">
+          <AnimatePresence mode="wait">
+            {showEn ? (
+              <motion.div
+                key="en"
+                initial={{ opacity: 0, scale: 0.8, filter: 'blur(10px)' }}
+                animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, scale: 1.1, filter: 'blur(20px)' }}
+                transition={{ duration: 0.5 }}
+                className="w-full"
+              >
+                <AutoFitText maxSize="15vw" className="text-neon-cyan drop-shadow-[0_0_10px_rgba(0,243,255,0.5)]">
+                  MULTITASKING
+                </AutoFitText>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="tr"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex flex-col gap-4"
+              >
+                 <AutoFitText maxSize="8vw" className="text-white">Многозадачность</AutoFitText>
+                 <AutoFitText maxSize="6vw" className="text-neon-cyan opacity-80">Ko'p vazifalik</AutoFitText>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
         <motion.div
             initial={{ y: 50, opacity: 0 }}

@@ -17,7 +17,7 @@ const routes = [
   { path: '/skills/pressure', label: 'PRESS' },
   { path: '/skills/problem-solving', label: 'SOLVE' },
   { path: '/skills/reliable', label: 'RELY' },
-  { path: '/skills/quiz', label: 'QUIZ' }, // Added Quiz Route
+  { path: '/skills/quiz', label: 'QUIZ' },
   // Exploded Grammar Routes
   { path: '/grammar/intro', label: 'RULES' },
   { path: '/grammar/obligation', label: 'MUST' },
@@ -66,7 +66,7 @@ const MainLayout: React.FC = () => {
       <Background />
 
       {/* Header - Absolute to float over content */}
-      <header className="absolute top-0 w-full z-50 flex justify-between items-center p-4 md:p-6 backdrop-blur-none pointer-events-none">
+      <header className="absolute top-0 w-full h-[80px] z-50 flex justify-between items-center p-4 md:p-6 backdrop-blur-none pointer-events-none">
         <div className="pointer-events-auto flex items-center gap-4">
             <button 
               onClick={() => { playClick(); setIsMenuOpen(true); }}
@@ -166,25 +166,28 @@ const MainLayout: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Main Content Area - Centered Flexbox for Projectors */}
-      <main className="flex-grow flex items-center justify-center relative z-10 w-full h-full p-4 md:p-12">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={location.pathname}
-            initial={{ opacity: 0, scale: 0.95, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, scale: 1.05, filter: 'blur(10px)' }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="w-full h-full flex flex-col items-center justify-center"
-          >
-            <Outlet />
-          </motion.div>
-        </AnimatePresence>
+      {/* Main Content Area - Scrollable */}
+      {/* Changed overflow-hidden to overflow-y-auto on Main, and ensured padding clears fixed headers/footers */}
+      <main className="flex-grow overflow-y-auto overflow-x-hidden relative z-10 w-full pt-24 pb-24 scroll-smooth">
+        <div className="min-h-full flex flex-col items-center justify-center p-4 md:p-12">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={location.pathname}
+              initial={{ opacity: 0, scale: 0.95, filter: 'blur(10px)' }}
+              animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, scale: 1.05, filter: 'blur(10px)' }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
+              className="w-full flex flex-col items-center justify-center"
+            >
+              <Outlet />
+            </motion.div>
+          </AnimatePresence>
+        </div>
       </main>
 
-      {/* Footer Navigation - Minimalist */}
+      {/* Footer Navigation - Fixed Bottom */}
       {location.pathname !== '/' && (
-        <footer className="absolute bottom-0 w-full z-40 p-4 md:p-6 flex justify-between items-end pointer-events-none">
+        <footer className="absolute bottom-0 w-full h-[80px] z-40 p-4 md:p-6 flex justify-between items-end pointer-events-none bg-gradient-to-t from-black/50 to-transparent">
           <button
             onClick={handlePrev}
             onMouseEnter={playHover}
