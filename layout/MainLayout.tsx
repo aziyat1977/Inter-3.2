@@ -25,6 +25,19 @@ const routes = [
   { path: '/grammar/optional', label: 'DON\'T' },
   { path: '/grammar/optional-past', label: 'DIDN\'T' },
   { path: '/grammar/error', label: 'ERROR' },
+  // PRACTICE SECTION START
+  { path: '/practice/intro', label: 'PRACTICE' },
+  { path: '/practice/gap/1', label: 'GAP 1: PRESENT' },
+  { path: '/practice/gap/2', label: 'GAP 2: PAST' },
+  { path: '/practice/gap/3', label: 'GAP 3: PROHIBIT' },
+  { path: '/practice/gap/4', label: 'GAP 4: OPTIONAL' },
+  { path: '/practice/gap/5', label: 'GAP 5: MIXED' },
+  { path: '/practice/quiz/1', label: 'QUIZ 1: LOGIC' },
+  { path: '/practice/quiz/2', label: 'QUIZ 2: TIME' },
+  { path: '/practice/quiz/3', label: 'QUIZ 3: FORM' },
+  { path: '/practice/quiz/4', label: 'QUIZ 4: CONTEXT' },
+  { path: '/practice/quiz/5', label: 'QUIZ 5: MASTER' },
+  // PRACTICE SECTION END
   { path: '/interrogation', label: 'DETECT' },
   { path: '/cooler', label: 'END' },
 ];

@@ -3,7 +3,7 @@ import AutoFitText from '../../components/AutoFitText';
 import Translator from '../../components/Translator';
 import TeacherNote from '../../components/TeacherNote';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Clock } from 'lucide-react';
 
 const ObligationPast: React.FC = () => {
   return (
@@ -18,7 +18,7 @@ const ObligationPast: React.FC = () => {
         <span className="text-[3vmin] font-bold">PAST</span>
       </motion.div>
 
-      <div className="relative w-full max-w-5xl h-[30vh]">
+      <div className="relative w-full max-w-5xl h-[30vh] mb-8">
         {/* Glow effect */}
         <div className="absolute inset-0 bg-neon-pink/20 blur-[100px] rounded-full" />
         
@@ -31,26 +31,70 @@ const ObligationPast: React.FC = () => {
         />
       </div>
 
-      {/* Timeline Visual */}
-      <div className="w-full max-w-4xl mt-16 relative h-2 bg-gray-700 rounded-full flex items-center justify-between px-4">
-        {/* Past Point */}
-        <div className="absolute left-[20%] top-1/2 -translate-y-1/2 flex flex-col items-center">
-            <div className="w-6 h-6 md:w-8 md:h-8 bg-neon-pink rounded-full shadow-[0_0_20px_#ff00ff]" />
-            <p className="absolute top-10 text-neon-pink font-bold text-[2vmin]">YESTERDAY</p>
+      {/* Ultra Animated Timeline */}
+      <div className="w-full max-w-4xl relative h-32 flex items-center justify-center">
+        {/* Base Line */}
+        <div className="absolute top-1/2 left-[10%] right-[10%] h-[2px] bg-white/10 rounded-full" />
+
+        {/* Active Line (Growing from Right to Left) */}
+        <motion.div 
+          initial={{ width: 0 }} 
+          animate={{ width: '80%' }} 
+          transition={{ duration: 3, ease: "easeInOut" }}
+          className="absolute top-1/2 right-[10%] h-[4px] bg-gradient-to-l from-transparent via-neon-pink to-neon-pink shadow-[0_0_20px_#ff00ff]"
+        />
+
+        {/* NOW Point */}
+        <div className="absolute right-[10%] top-1/2 -translate-y-1/2 flex flex-col items-center z-10">
+           <div className="w-3 h-3 bg-gray-400 rounded-full" />
+           <p className="absolute top-6 text-gray-500 text-[10px] tracking-[0.2em]">NOW</p>
         </div>
-        
-        {/* Present Point */}
-        <div className="absolute right-[20%] top-1/2 -translate-y-1/2 flex flex-col items-center opacity-30">
-            <div className="w-4 h-4 bg-gray-500 rounded-full" />
-            <p className="absolute top-8 text-gray-500 text-[1.5vmin]">NOW</p>
-        </div>
+
+        {/* Time Traveler Particle */}
+        <motion.div
+          initial={{ right: '10%' }}
+          animate={{ right: '90%' }} // 10% + 80% width = 90% position
+          transition={{ duration: 3, ease: "easeInOut" }}
+          className="absolute top-1/2 -translate-y-1/2 z-20"
+        >
+           <motion.div 
+             animate={{ scale: [1, 1.5, 1], opacity: [0.5, 1, 0.5] }}
+             transition={{ repeat: Infinity, duration: 0.5 }}
+             className="w-6 h-6 bg-white rounded-full shadow-[0_0_25px_white] flex items-center justify-center"
+           >
+             <Clock size={12} className="text-black" />
+           </motion.div>
+        </motion.div>
+
+        {/* PAST Point (Appears with impact) */}
+        <motion.div 
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 2.8, duration: 0.8, type: "spring", bounce: 0.6 }}
+          className="absolute left-[10%] top-1/2 -translate-y-1/2 flex flex-col items-center z-10"
+        >
+            <div className="relative">
+              <div className="w-8 h-8 md:w-12 md:h-12 bg-neon-pink rounded-full shadow-[0_0_40px_#ff00ff] z-10 relative flex items-center justify-center border-4 border-black">
+                  <span className="font-bold text-black text-xs md:text-sm">PAST</span>
+              </div>
+              <div className="absolute inset-0 bg-neon-pink rounded-full animate-ping opacity-50 duration-1000" />
+            </div>
+            <motion.p 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 3.2 }}
+              className="absolute top-14 text-neon-pink font-bold text-sm md:text-lg tracking-[0.2em] whitespace-nowrap drop-shadow-[0_0_10px_#ff00ff]"
+            >
+              YESTERDAY
+            </motion.p>
+        </motion.div>
       </div>
 
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-        className="mt-20 text-[3vmin] text-gray-300 italic px-4"
+        transition={{ delay: 3.5, duration: 1 }}
+        className="mt-8 text-[3vmin] text-gray-300 italic px-4"
       >
         "I <span className="text-neon-pink font-bold">had to</span> lie to get the job."
       </motion.div>

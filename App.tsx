@@ -10,12 +10,12 @@ import Detector from './pages/Detector';
 import Cooler from './pages/Cooler';
 
 // Skill Pages
-import SkillIntro from './pages/Skills'; // Renamed conceptually in routes
+import SkillIntro from './pages/Skills';
 import Multitasking from './pages/skills/Multitasking';
 import UnderPressure from './pages/skills/UnderPressure';
 import ProblemSolving from './pages/skills/ProblemSolving';
 import Reliable from './pages/skills/Reliable';
-import SkillQuiz from './pages/skills/SkillQuiz'; // Added
+import SkillQuiz from './pages/skills/SkillQuiz';
 
 // Grammar Pages
 import GrammarIntro from './pages/grammar/GrammarIntro';
@@ -26,6 +26,11 @@ import ProhibitionPast from './pages/grammar/ProhibitionPast';
 import Optional from './pages/grammar/Optional';
 import OptionalPast from './pages/grammar/OptionalPast';
 import CommonErrors from './pages/grammar/CommonErrors';
+
+// Practice Pages
+import PracticeIntro from './pages/practice/PracticeIntro';
+import GapFillLevel from './pages/practice/GapFillLevel';
+import GrammarQuizLevel from './pages/practice/GrammarQuizLevel';
 
 const App: React.FC = () => {
   return (
@@ -38,7 +43,7 @@ const App: React.FC = () => {
               <Route path="/intro" element={<Intro />} />
               <Route path="/identity" element={<Identity />} />
               
-              {/* Split Skills Section */}
+              {/* Skills Section */}
               <Route path="/skills/intro" element={<SkillIntro />} />
               <Route path="/skills/multitasking" element={<Multitasking />} />
               <Route path="/skills/pressure" element={<UnderPressure />} />
@@ -46,7 +51,7 @@ const App: React.FC = () => {
               <Route path="/skills/reliable" element={<Reliable />} />
               <Route path="/skills/quiz" element={<SkillQuiz />} />
               
-              {/* Expanded Grammar Section */}
+              {/* Grammar Section */}
               <Route path="/grammar/intro" element={<GrammarIntro />} />
               <Route path="/grammar/obligation" element={<Obligation />} />
               <Route path="/grammar/obligation-past" element={<ObligationPast />} />
@@ -55,6 +60,11 @@ const App: React.FC = () => {
               <Route path="/grammar/optional" element={<Optional />} />
               <Route path="/grammar/optional-past" element={<OptionalPast />} />
               <Route path="/grammar/error" element={<CommonErrors />} />
+
+              {/* New Practice Section */}
+              <Route path="/practice/intro" element={<PracticeIntro />} />
+              <Route path="/practice/gap/:level" element={<GapFillLevel />} />
+              <Route path="/practice/quiz/:level" element={<GrammarQuizLevel />} />
 
               <Route path="/interrogation" element={<Detector />} />
               <Route path="/cooler" element={<Cooler />} />
