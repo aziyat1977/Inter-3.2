@@ -17,7 +17,7 @@ const Obligation: React.FC = () => {
                 en="PRESENT // NOW" 
                 ru="НАСТОЯЩЕЕ" 
                 uz="HOZIRGI ZAMON"
-                className="text-neon-cyan font-bold tracking-[0.5em] text-[2vmin] uppercase"
+                className="text-cyan-600 dark:text-neon-cyan font-bold tracking-[0.5em] text-[2vmin] uppercase"
                 contentClassName="min-h-[2rem]"
             />
         </div>
@@ -26,7 +26,7 @@ const Obligation: React.FC = () => {
       <div className="flex flex-col gap-12 w-full max-w-4xl">
         <div className="h-[20vh] w-full">
             <Translator 
-            en={<AutoFitText maxSize="15vw" className="text-white">MUST</AutoFitText>}
+            en={<AutoFitText maxSize="15vw" className="text-slate-900 dark:text-white">MUST</AutoFitText>}
             ru="Должен"
             uz="Majbur (Qat'iy)"
             className="w-full h-full"
@@ -34,11 +34,11 @@ const Obligation: React.FC = () => {
             />
         </div>
         
-        <div className="w-[30vw] h-[2px] bg-gray-700 mx-auto rounded-full" />
+        <div className="w-[30vw] h-[2px] bg-slate-300 dark:bg-gray-700 mx-auto rounded-full" />
 
         <div className="h-[15vh] w-full">
             <Translator 
-            en={<AutoFitText maxSize="12vw" className="text-gray-300">HAVE TO</AutoFitText>}
+            en={<AutoFitText maxSize="12vw" className="text-slate-500 dark:text-gray-300">HAVE TO</AutoFitText>}
             ru="Вынужден / Приходится"
             uz="Majbur (Vaziyat taqozosi)"
             className="w-full h-full"
@@ -51,10 +51,10 @@ const Obligation: React.FC = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="mt-12 bg-white/5 px-8 py-6 rounded-xl border border-white/10 backdrop-blur-md"
+        className="mt-12 bg-white/50 dark:bg-white/5 px-8 py-6 rounded-xl border border-black/5 dark:border-white/10 backdrop-blur-md"
       >
-        <p className="text-[3vmin] text-gray-400">
-          "I <span className="text-neon-cyan font-bold">must</span> finish this level."
+        <p className="text-[3vmin] text-slate-600 dark:text-gray-400">
+          "I <span className="text-cyan-600 dark:text-neon-cyan font-bold">must</span> finish this level."
         </p>
       </motion.div>
 

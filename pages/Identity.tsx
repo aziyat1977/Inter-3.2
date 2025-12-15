@@ -2,31 +2,32 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import TeacherNote from '../components/TeacherNote';
 import { useSound } from '../contexts/SoundContext';
-import Translator from '../components/Translator';
+import CyberContainer from '../components/CyberContainer';
+import { Fingerprint, Lock, Unlock } from 'lucide-react';
 
 const cards = [
   {
     id: 1,
-    role: "THE MEDICAL EXPERT",
+    role: "THE SURGEON",
     fakeJob: "Brain Surgeon",
-    realJob: "Peeling stickers off apples",
+    realJob: "Fruit Peeler",
     vocab: "Precision, Under Pressure",
     line: "I had to be extremely careful not to damage the skin... uh, the brain."
   },
   {
     id: 2,
-    role: "THE TECH GENIUS",
+    role: "THE CEO",
     fakeJob: "CEO of Google",
-    realJob: "Fixing Grandma's WiFi",
+    realJob: "Router Fixer",
     vocab: "Problem Solving, Patience",
     line: "I had to explain simple concepts very slowly to the board."
   },
   {
     id: 3,
-    role: "THE DINO TAMER",
-    fakeJob: "T-Rex Trainer",
-    realJob: "Walking a fat Pug",
-    vocab: "Managing Schedules, Confidence",
+    role: "THE TRAINER",
+    fakeJob: "T-Rex Tamer",
+    realJob: "Pug Walker",
+    vocab: "Schedules, Confidence",
     line: "I didn't need to run fast, but I had to carry giant poop bags."
   }
 ];
@@ -38,83 +39,89 @@ const Identity: React.FC = () => {
   const handleCardClick = (id: number) => {
     playFlip();
     if (flipped !== id) {
-        setTimeout(() => playReveal(), 300); // Sound when content reveals
+        setTimeout(() => playReveal(), 300);
     }
     setFlipped(flipped === id ? null : id);
   };
 
   return (
-    <div className="w-full min-h-full flex flex-col justify-center px-4 py-8">
-      <div className="mb-8 md:mb-12 text-center w-full flex flex-col items-center">
-         <h2 className="text-[5vmin] font-display font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-purple-500">
-          01. CHOOSE YOUR LIES
-        </h2>
-        
-        <Translator 
-            en={<p className="text-[2.5vmin] opacity-70">Tap a card to download your "Secret Identity".</p>}
-            ru="Нажмите на карту, чтобы получить секретную личность"
-            uz="Maxfiy shaxsingizni yuklab olish uchun kartani bosing"
-        />
+    <div className="w-full h-full flex flex-col p-4 md:p-8">
+      <div className="mb-8 text-center">
+         <div className="inline-block px-4 py-1 rounded-full border border-cyan-600/30 bg-cyan-600/10 dark:border-neon-cyan/30 dark:bg-neon-cyan/10 mb-2">
+            <span className="text-cyan-700 dark:text-neon-cyan font-mono text-xs tracking-[0.3em]">STEP 01</span>
+         </div>
+         <h2 className="text-4xl md:text-5xl font-display font-bold mb-2 text-slate-900 dark:text-white">IDENTITY SPOOFING</h2>
+         <p className="text-slate-500 dark:text-gray-400 font-light">Select a cover story to download.</p>
       </div>
 
-      {/* Grid adapts: min-height allows it to grow on mobile, rather than fixed height */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12 w-full max-w-[90vw] mx-auto">
-        {cards.map((card) => (
-          <div 
-            key={card.id} 
-            className="w-full aspect-[3/4] md:aspect-[2/3] perspective-1000 cursor-pointer group min-h-[400px]"
-            onClick={() => handleCardClick(card.id)}
-            onMouseEnter={playHover}
-          >
+      <div className="flex-grow flex items-center justify-center">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl">
+            {cards.map((card) => (
             <motion.div 
-              className="relative w-full h-full transition-all duration-700 preserve-3d"
-              animate={{ rotateY: flipped === card.id ? 180 : 0 }}
+                key={card.id}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: card.id * 0.2 }}
+                className="perspective-1000 h-[400px] cursor-pointer group"
+                onClick={() => handleCardClick(card.id)}
+                onMouseEnter={playHover}
             >
-              {/* Front */}
-              <div className="absolute w-full h-full backface-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-gray-900 to-black p-8 flex flex-col justify-between shadow-2xl group-hover:border-neon-cyan/50 transition-colors">
-                 <div>
-                    <h3 className="text-[8vmin] md:text-[6vmin] font-display font-bold opacity-20">#{String(card.id).padStart(3, '0')}</h3>
-                    <h4 className="text-[5vmin] md:text-[3vmin] font-bold mt-4 text-white leading-tight">{card.role}</h4>
-                 </div>
-                 <div className="text-neon-cyan text-xs md:text-sm tracking-widest animate-pulse border border-neon-cyan/30 rounded-full px-4 py-2 self-start">
-                    TAP TO ACCESS
-                 </div>
-              </div>
-
-              {/* Back */}
-              <div className="absolute w-full h-full backface-hidden rounded-3xl border border-neon-pink bg-gradient-to-br from-pink-900/20 to-black p-6 md:p-8 flex flex-col justify-center rotate-y-180 backdrop-blur-xl shadow-[0_0_30px_rgba(255,0,255,0.1)]">
-                 <div className="flex flex-col h-full justify-between gap-4">
-                    <div>
-                        <p className="text-[10px] md:text-xs text-neon-pink uppercase tracking-widest mb-1">Target Identity</p>
-                        <h3 className="text-xl md:text-2xl font-bold text-white leading-none mb-4">{card.fakeJob}</h3>
-                    
-                        <p className="text-[10px] md:text-xs text-gray-500 uppercase tracking-widest mb-1">True Identity</p>
-                        <h3 className="text-lg md:text-xl text-gray-400 line-through decoration-red-500 decoration-2 leading-none">{card.realJob}</h3>
-                    </div>
-                    
-                    <div className="bg-white/5 p-3 rounded-lg border-l-2 border-neon-cyan">
-                        <p className="text-[10px] md:text-xs text-neon-cyan uppercase tracking-widest mb-1">Vocab</p>
-                        <p className="text-white font-mono text-xs md:text-sm">{card.vocab}</p>
+                <motion.div 
+                    className="relative w-full h-full preserve-3d transition-transform duration-700"
+                    animate={{ rotateY: flipped === card.id ? 180 : 0 }}
+                >
+                    {/* FRONT */}
+                    <div className="absolute inset-0 backface-hidden">
+                        <CyberContainer className="h-full group-hover:scale-[1.02] transition-transform">
+                            <div className="flex flex-col items-center justify-between h-full py-8 text-center">
+                                <Fingerprint size={64} className="text-slate-500 dark:text-gray-600 group-hover:text-cyan-600 dark:group-hover:text-neon-cyan transition-colors" />
+                                <div>
+                                    <h3 className="text-3xl font-display font-bold text-slate-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-neon-cyan transition-colors">{card.role}</h3>
+                                    <div className="w-12 h-1 bg-black/10 dark:bg-white/10 mx-auto mt-4 group-hover:bg-cyan-600 dark:group-hover:bg-neon-cyan transition-colors" />
+                                </div>
+                                <div className="flex items-center gap-2 text-xs font-mono text-slate-400 dark:text-gray-500 border border-black/10 dark:border-white/10 px-3 py-1 rounded-full">
+                                    <Lock size={10} /> ENCRYPTED
+                                </div>
+                            </div>
+                        </CyberContainer>
                     </div>
 
-                    <div className="bg-white/5 p-3 rounded-lg border-l-2 border-neon-pink italic">
-                        <p className="text-gray-300 text-sm md:text-base">"{card.line}"</p>
+                    {/* BACK */}
+                    <div className="absolute inset-0 backface-hidden rotate-y-180">
+                        <div className="h-full w-full relative p-1">
+                            {/* Custom Back Style since CyberContainer wraps content */}
+                            <div className="h-full w-full bg-slate-100 dark:bg-gradient-to-br dark:from-neon-pink/20 dark:to-black border border-pink-500 dark:border-neon-pink rounded-xl p-6 flex flex-col justify-between relative overflow-hidden backdrop-blur-xl">
+                                <div className="absolute top-0 left-0 w-full h-1 bg-pink-500 dark:bg-neon-pink shadow-[0_0_20px_#ff00ff]" />
+                                
+                                <div className="space-y-4 relative z-10">
+                                    <div>
+                                        <p className="text-[10px] text-pink-600 dark:text-neon-pink uppercase tracking-widest">Target Persona</p>
+                                        <h3 className="text-2xl font-bold text-slate-900 dark:text-white leading-none">{card.fakeJob}</h3>
+                                    </div>
+                                    <div>
+                                        <p className="text-[10px] text-slate-500 dark:text-gray-500 uppercase tracking-widest">Real Persona</p>
+                                        <h3 className="text-lg text-slate-400 dark:text-gray-400 line-through decoration-red-500 decoration-2">{card.realJob}</h3>
+                                    </div>
+                                </div>
+
+                                <div className="relative z-10 bg-white dark:bg-black/40 p-3 rounded border-l-2 border-slate-300 dark:border-white/30 italic text-sm text-slate-700 dark:text-gray-300 shadow-sm">
+                                    "{card.line}"
+                                </div>
+                                
+                                <div className="absolute bottom-4 right-4 text-pink-500/10 dark:text-neon-pink/20">
+                                    <Unlock size={80} />
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                 </div>
-              </div>
+                </motion.div>
             </motion.div>
-          </div>
-        ))}
+            ))}
+        </div>
       </div>
 
       <TeacherNote 
-        content={
-          <div className="space-y-2">
-             <p><strong>Activity:</strong> Roleplay. Student A is the Boss (interviewer). Student B selects a card.</p>
-             <p><strong>Goal:</strong> Student B must answer questions using the vocabulary and grammar to convince Student A they are qualified.</p>
-             <p className="text-neon-yellow"><strong>Hint:</strong> Encourage them to use "have to" for responsibilities.</p>
-          </div>
-        }
+        content="Roleplay Activity. Student A (Boss) vs Student B (Imposter). Goal: Convince the boss using the vocab."
       />
     </div>
   );

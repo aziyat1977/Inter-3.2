@@ -16,13 +16,13 @@ const Optional: React.FC = () => {
             en="NO OBLIGATION" 
             ru="ОТСУТСТВИЕ НЕОБХОДИМОСТИ" 
             uz="MAJBURIYAT YO'Q"
-            className="text-neon-yellow font-bold tracking-[0.5em] text-[2vmin] uppercase"
+            className="text-yellow-600 dark:text-neon-yellow font-bold tracking-[0.5em] text-[2vmin] uppercase"
         />
       </motion.div>
 
       <div className="w-full max-w-5xl h-[25vh]">
         <Translator 
-            en={<AutoFitText maxSize="12vw" className="text-white">DON'T HAVE TO</AutoFitText>}
+            en={<AutoFitText maxSize="12vw" className="text-slate-900 dark:text-white">DON'T HAVE TO</AutoFitText>}
             ru="Не обязательно / Не нужно"
             uz="Majbur emassan / Shart emas"
             className="w-full h-full"
@@ -34,17 +34,12 @@ const Optional: React.FC = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="mt-12 bg-yellow-900/20 px-8 py-6 rounded-xl border border-yellow-500/30"
+        className="mt-12 bg-yellow-50 dark:bg-yellow-900/20 px-8 py-6 rounded-xl border border-yellow-200 dark:border-yellow-500/30"
       >
-        <p className="text-[3vmin] text-yellow-100">
-          "You <span className="font-bold text-neon-yellow">don't have to</span> wear a tie."
+        <p className="text-[3vmin] text-yellow-800 dark:text-yellow-100">
+          "You <span className="font-bold text-yellow-600 dark:text-neon-yellow">don't have to</span> wear a tie."
         </p>
-        <p className="text-[2vmin] text-gray-400 mt-2">(But you can if you want)</p>
+        <p className="text-[2vmin] text-slate-500 dark:text-gray-400 mt-2">(But you can if you want)</p>
       </motion.div>
 
-      <TeacherNote content="Contrast with Mustn't. Mustn't = Forbidden. Don't have to = Your choice." />
-    </div>
-  );
-};
-
-export default Optional;
+      <TeacherNote content="Contrast with Mustn't. Mustn't = Forbidden.
