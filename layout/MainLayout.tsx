@@ -11,14 +11,12 @@ const routes = [
   { path: '/', label: 'MODE' },
   { path: '/intro', label: 'INTRO' },
   { path: '/identity', label: 'ID' },
-  // Skills Section Split
   { path: '/skills/intro', label: 'SKILLS' },
   { path: '/skills/multitasking', label: 'TASK' },
   { path: '/skills/pressure', label: 'PRESS' },
   { path: '/skills/problem-solving', label: 'SOLVE' },
   { path: '/skills/reliable', label: 'RELY' },
   { path: '/skills/quiz', label: 'QUIZ' },
-  // Exploded Grammar Routes
   { path: '/grammar/intro', label: 'RULES' },
   { path: '/grammar/obligation', label: 'MUST' },
   { path: '/grammar/obligation-past', label: 'HAD TO' },
@@ -58,15 +56,15 @@ const MainLayout: React.FC = () => {
     setIsMenuOpen(false);
   };
 
-  // Progress Bar Calculation
   const progress = ((currentIndex + 1) / routes.length) * 100;
 
   return (
-    <div className={`h-screen w-screen overflow-hidden flex flex-col relative transition-colors duration-500 ${theme === Theme.DARK ? 'text-white' : 'text-slate-900'}`}>
+    // THE ALGORITHM: h-[100dvh] ensures full viewport on all devices (address bars included)
+    <div className={`h-[100dvh] w-screen overflow-hidden flex flex-col relative transition-colors duration-500 ${theme === Theme.DARK ? 'text-white' : 'text-slate-900'}`}>
       <Background />
 
-      {/* Header - Absolute to float over content */}
-      <header className="absolute top-0 w-full h-[80px] z-50 flex justify-between items-center p-4 md:p-6 backdrop-blur-none pointer-events-none">
+      {/* Header - Fixed Height 80px */}
+      <header className="shrink-0 h-[60px] md:h-[80px] w-full z-50 flex justify-between items-center px-4 md:px-6 backdrop-blur-none pointer-events-none relative">
         <div className="pointer-events-auto flex items-center gap-4">
             <button 
               onClick={() => { playClick(); setIsMenuOpen(true); }}
@@ -75,7 +73,7 @@ const MainLayout: React.FC = () => {
             >
               <Menu size={24} />
             </button>
-            <span className={`text-lg md:text-2xl font-display font-bold ${isTeacher ? 'text-neon-yellow' : 'text-neon-cyan'}`}>
+            <span className={`text-base md:text-2xl font-display font-bold ${isTeacher ? 'text-neon-yellow' : 'text-neon-cyan'}`}>
                 {isTeacher ? 'TEACHER_OS' : 'IMPOSTER_V1'}
             </span>
         </div>
@@ -110,7 +108,6 @@ const MainLayout: React.FC = () => {
       <AnimatePresence>
         {isMenuOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -118,8 +115,6 @@ const MainLayout: React.FC = () => {
               onClick={() => setIsMenuOpen(false)}
               className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60]"
             />
-            
-            {/* Drawer */}
             <motion.nav
               initial={{ x: '-100%' }}
               animate={{ x: 0 }}
@@ -140,7 +135,6 @@ const MainLayout: React.FC = () => {
                   <X size={24} />
                 </button>
               </div>
-
               <div className="flex flex-col gap-2">
                 {routes.map((route, index) => {
                   const isActive = location.pathname === route.path;
@@ -166,18 +160,19 @@ const MainLayout: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Main Content Area - Scrollable */}
-      {/* Changed overflow-hidden to overflow-y-auto on Main, and ensured padding clears fixed headers/footers */}
-      <main className="flex-grow overflow-y-auto overflow-x-hidden relative z-10 w-full pt-24 pb-24 scroll-smooth">
-        <div className="min-h-full flex flex-col items-center justify-center p-4 md:p-12">
+      {/* Main Content Area - THE ENGINE */}
+      {/* flex-grow ensures it fills exactly the space between header and footer */}
+      {/* overflow-y-auto custom-scroll allows internal scrolling if needed, but we try to fit */}
+      <main className="flex-grow flex flex-col relative z-10 w-full overflow-y-auto custom-scroll overflow-x-hidden">
+        <div className="flex-grow flex flex-col items-center justify-center p-2 md:p-4 w-full h-full">
           <AnimatePresence mode="wait">
             <motion.div
               key={location.pathname}
-              initial={{ opacity: 0, scale: 0.95, filter: 'blur(10px)' }}
+              initial={{ opacity: 0, scale: 0.98, filter: 'blur(5px)' }}
               animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, scale: 1.05, filter: 'blur(10px)' }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="w-full flex flex-col items-center justify-center"
+              exit={{ opacity: 0, scale: 1.02, filter: 'blur(5px)' }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="w-full h-full flex flex-col items-center justify-center"
             >
               <Outlet />
             </motion.div>
@@ -185,9 +180,9 @@ const MainLayout: React.FC = () => {
         </div>
       </main>
 
-      {/* Footer Navigation - Fixed Bottom */}
+      {/* Footer Navigation - Fixed Height */}
       {location.pathname !== '/' && (
-        <footer className="absolute bottom-0 w-full h-[80px] z-40 p-4 md:p-6 flex justify-between items-end pointer-events-none bg-gradient-to-t from-black/50 to-transparent">
+        <footer className="shrink-0 h-[70px] md:h-[90px] w-full z-40 p-4 md:p-6 flex justify-between items-center pointer-events-none bg-gradient-to-t from-black/80 to-transparent">
           <button
             onClick={handlePrev}
             onMouseEnter={playHover}
@@ -199,8 +194,7 @@ const MainLayout: React.FC = () => {
             <ChevronLeft size={16} /> <span className="hidden md:inline">PREV</span>
           </button>
 
-          {/* Progress Line */}
-          <div className="w-1/3 h-1 bg-gray-800 rounded-full overflow-hidden mx-4 mb-3">
+          <div className="w-1/3 md:w-1/4 h-1 bg-gray-800 rounded-full overflow-hidden mx-4">
              <div 
                 className="h-full bg-neon-cyan transition-all duration-500 shadow-[0_0_10px_#00f3ff]"
                 style={{ width: `${progress}%` }}

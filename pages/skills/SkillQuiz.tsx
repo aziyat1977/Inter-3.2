@@ -182,20 +182,21 @@ const SkillQuiz: React.FC = () => {
   }
 
   return (
-    <div className="w-full h-full flex flex-col gap-3 p-2 md:p-4 max-w-6xl mx-auto overflow-hidden">
+    // FULL FLEX CONTAINER ALGORITHM
+    <div className="w-full h-full flex flex-col gap-2 md:gap-4 p-0 md:p-2 max-w-7xl mx-auto">
       
-      {/* Top Bar */}
-      <div className="w-full flex justify-between items-center shrink-0">
-        <div className="bg-white/10 px-3 py-1 md:px-4 md:py-2 rounded-full font-mono text-sm md:text-xl">
+      {/* Top Bar - Minimized footprint */}
+      <div className="w-full flex justify-between items-center shrink-0 px-2">
+        <div className="bg-white/10 px-3 py-1 rounded-full font-mono text-xs md:text-lg">
             {currentQIndex + 1} / {questions.length}
         </div>
         <div className="text-lg md:text-2xl font-black text-neon-yellow">
-            SCORE: {score}
+            {score}
         </div>
       </div>
 
-      {/* Timer Bar */}
-      <div className="w-full h-2 md:h-4 bg-gray-800 rounded-full overflow-hidden shrink-0">
+      {/* Timer Bar - Ultra slim */}
+      <div className="w-full h-1 md:h-3 bg-gray-800 rounded-full overflow-hidden shrink-0 mx-2">
         <motion.div 
             initial={{ width: '100%' }}
             animate={{ width: `${(timer / 15) * 100}%` }}
@@ -204,11 +205,10 @@ const SkillQuiz: React.FC = () => {
         />
       </div>
 
-      {/* Question Area - Fills available space */}
-      <div className="flex-1 w-full relative min-h-0 flex flex-col">
-        <div className="bg-white/5 backdrop-blur-md border border-white/10 p-4 md:p-8 rounded-2xl w-full h-full flex items-center justify-center shadow-2xl relative overflow-hidden">
+      {/* Question Area - Maximize available space with flex-1 */}
+      <div className="flex-1 w-full relative min-h-0 flex flex-col px-2">
+        <div className="bg-white/5 backdrop-blur-md border border-white/10 p-4 rounded-2xl w-full h-full flex items-center justify-center shadow-2xl relative overflow-hidden">
             
-            {/* Feedback Overlay */}
             <AnimatePresence>
                 {showAnswerFeedback && (
                     <motion.div 
@@ -224,40 +224,39 @@ const SkillQuiz: React.FC = () => {
                 )}
             </AnimatePresence>
 
-            <AutoFitText maxSize="8vh" className={isDark ? "text-white" : "text-gray-900"}>
+            <AutoFitText padding={20} className={isDark ? "text-white" : "text-gray-900"}>
                 {currentQuestion.text}
             </AutoFitText>
         </div>
-        
-        {/* Random decorative icon floating near question */}
-        <div className="absolute -bottom-4 -right-4 md:bottom-4 md:right-4 p-4 opacity-20 pointer-events-none">
-             <RandomIcon size={64} />
-        </div>
       </div>
 
-      {/* Answer Grid - Constrained height (approx 40% of viewport or fit content) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 w-full shrink-0 h-[45%] md:h-[35%]">
+      {/* Answer Grid - Adaptive Height */}
+      {/* On landscape phones (short), use smaller percentage. On desktop/portrait, use taller. */}
+      <div className="shrink-0 h-[40%] md:h-[35%] landscape:h-[30%] landscape:md:h-[35%] w-full grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4 px-2 pb-2">
         {currentQuestion.options.map((opt: string, idx: number) => (
             <motion.button
                 key={idx}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => handleAnswer(opt)}
                 disabled={showAnswerFeedback}
-                className={`${COLORS[idx]} p-3 md:p-4 rounded-xl shadow-lg flex items-center justify-between group transition-all relative overflow-hidden h-full`}
+                className={`${COLORS[idx]} rounded-xl shadow-lg flex items-center justify-between group transition-all relative overflow-hidden h-full`}
             >
                 <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
                 
                 {/* Shapes */}
-                <div className="bg-black/20 w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded font-black text-white/50 text-base md:text-xl relative z-10 shrink-0">
+                <div className="bg-black/20 w-8 h-full md:w-12 flex items-center justify-center font-black text-white/50 text-base md:text-xl relative z-10 shrink-0">
                     {idx === 0 && "▲"}
                     {idx === 1 && "◆"}
                     {idx === 2 && "●"}
                     {idx === 3 && "■"}
                 </div>
 
-                <span className="text-base md:text-xl lg:text-2xl font-bold text-white relative z-10 text-center flex-grow shadow-black drop-shadow-md leading-tight px-2 break-words line-clamp-2">
-                    {opt}
-                </span>
+                <div className="flex-grow h-full flex items-center justify-center px-2 py-1 relative z-10">
+                   {/* Nested AutoFit to ensure option text fits no matter the length */}
+                   <AutoFitText minSize={12} padding={4} className="text-white drop-shadow-md">
+                      {opt}
+                   </AutoFitText>
+                </div>
             </motion.button>
         ))}
       </div>
