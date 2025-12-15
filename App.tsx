@@ -6,9 +6,16 @@ import MainLayout from './layout/MainLayout';
 import Welcome from './pages/Welcome';
 import Intro from './pages/Intro';
 import Identity from './pages/Identity';
-import Skills from './pages/Skills';
 import Detector from './pages/Detector';
 import Cooler from './pages/Cooler';
+
+// Skill Pages
+import SkillIntro from './pages/Skills'; // Renamed conceptually in routes
+import Multitasking from './pages/skills/Multitasking';
+import UnderPressure from './pages/skills/UnderPressure';
+import ProblemSolving from './pages/skills/ProblemSolving';
+import Reliable from './pages/skills/Reliable';
+import SkillQuiz from './pages/skills/SkillQuiz'; // Added
 
 // Grammar Pages
 import GrammarIntro from './pages/grammar/GrammarIntro';
@@ -30,7 +37,14 @@ const App: React.FC = () => {
               <Route path="/" element={<Welcome />} />
               <Route path="/intro" element={<Intro />} />
               <Route path="/identity" element={<Identity />} />
-              <Route path="/skills" element={<Skills />} />
+              
+              {/* Split Skills Section */}
+              <Route path="/skills/intro" element={<SkillIntro />} />
+              <Route path="/skills/multitasking" element={<Multitasking />} />
+              <Route path="/skills/pressure" element={<UnderPressure />} />
+              <Route path="/skills/problem-solving" element={<ProblemSolving />} />
+              <Route path="/skills/reliable" element={<Reliable />} />
+              <Route path="/skills/quiz" element={<SkillQuiz />} />
               
               {/* Expanded Grammar Section */}
               <Route path="/grammar/intro" element={<GrammarIntro />} />
